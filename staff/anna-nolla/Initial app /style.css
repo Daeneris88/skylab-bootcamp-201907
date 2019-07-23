@@ -1,0 +1,12 @@
+
+head{
+    margin: 20px;ss
+}
+
+.panel--show{
+    display: block;
+}    
+
+.panel--hide{
+    display: none;
+}
