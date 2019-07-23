@@ -1,39 +1,39 @@
 
 
     var panels = document.getElementsByClassName("panel");
+    var inputt = document.getElementsByClassName("inputt");
     var initial = panels[0];
     var register = panels[1];
     var login = panels[3];
     var registerSuccess = panels[2];
     var page = panels[4];
-
+    
+    
+    var users = [{null: null}];
+    
     var registerLink = initial.children[1];
     var loginLink = initial.children[2];
-
-    var users = [{null: null}];
-    var inputt = document.getElementsByClassName("inputt");
-
-
+    var goButtom = login.children[0];
+    var registerBack = login.children[2];
+    var registerForm = register.children[0];
+    var registerBackLink = register.children[2];
+    var log = registerSuccess.children[1];
+    
 registerLink.addEventListener("click", function(event){
         event.preventDefault();
 
         initial.classList.remove("panel--show");
         initial.classList.add("panel--hide");
-
-        register.classList.remove("panel--hide");
-        register.classList.add("panel--show");
+        
+        register.classList.remove('panel--hide');
+        register.classList.add('panel--show');
     });
-
-var registerBackLink = register.children[2];
-
 
 registerBackLink.addEventListener("click", function(event){
     event.preventDefault();
     
-    for(var i = 0; i < inputt.length; i++){
-        inputt[i].value = "";
-    }
-    
+    clear();
+
     register.classList.remove("panel--show");
     register.classList.add("panel--hide");
 
@@ -41,14 +41,10 @@ registerBackLink.addEventListener("click", function(event){
     initial.classList.add("panel--show");
 });
 
-var registerBack = login.children[1];
-
 registerBack.addEventListener("click", function(event){
     event.preventDefault();
     
-    for(var i = 0; i < inputt.length; i++){
-        inputt[i].value = "";
-    }
+    clear();
 
     login.classList.remove("panel--show");
     login.classList.add("panel--hide");
@@ -68,82 +64,48 @@ loginLink.addEventListener("click", function(event){
         login.classList.add("panel--show");
     });
 
-var registerForm = register.children[0];
-var feedback = register.children[1];
-
 registerForm.addEventListener('submit', function(event) {
     event.preventDefault();
-
+    debugger
     var name = event.target.name.value;
     var surname = event.target.surname.value;
-    var email = event.target.mail.value;
+    var email = event.target.email.value;
     var password = event.target.password.value;
 
-    if(!name.trim()){
-        feedback.innerText = "Wrong name.\n";
-    }
-    if(!surname.trim()){
-        feedback.innerText = "Wrong surname.\n";
-    }
-    if(!email.trim()){
-        feedback.innerText = "Wrong e-mail.\n";
-    }
-    if(!password.trim()){
-        feedback.innerText = "Wrong password.\n";
-    }
-    else {
-        for (var i= 0; i < users.length; i++){
-            if(users[i].email !== email){
-        
-                users.push({
-                    name: name,
-                    surname: surname,
-                    email: email,
-                    password: password
-                });
-                register.classList.remove('panel--show');
-                register.classList.add('panel--hide');
-                
-                registerSuccess.classList.remove('panel--hide');
-                registerSuccess.classList.add('panel--show');
-                break;
-            }
-        }
-    }
-});
+    try{
+        registerF(name, surname, email, password);
 
-var goButtom = login.children[0];
+        register.classList.remove('panel--show');
+        register.classList.add('panel--hide');
+        
+        registerSuccess.classList.remove('panel--hide');
+        registerSuccess.classList.add('panel--show');
+
+    } catch(error){
+        var feedback = register.children[1];
+        feedback.innerText = error.message;
+    }   
+});
 
 goButtom.addEventListener("submit", function(event){
     event.preventDefault();
-
-    var email = event.target.mail.value;
+    
+    var email = event.target.email.value;
     var password = event.target.password.value;
 
-    if(email !== undefined || password !== undefined){
+    try{
+        goButtomF(email,password);
 
-        for(var i = 0; i < users.length; i++){
-            if(users[i].email === email && users[i].password === password){
-          
-                login.classList.remove("panel--show");
-                login.classList.add("panel--hide");
+        login.classList.remove("panel--show");
+        login.classList.add("panel--hide");
 
-                page.classList.remove("panel--hide");
-                page.classList.add("panel--show");
-                break;
-            }
-            else {
-                alert("Wrong e-mail and/or password!");
-                break;
-            }
-        }
-    }
-    else {
-        alert("introduce e-mail and password!");
+        page.classList.remove("panel--hide");
+        page.classList.add("panel--show");
+    } catch(error){
+        var feedbackL = login.children[1];
+        feedbackL.innerText = error.message;
     }
 });
-
-var log = registerSuccess.children[1];
 
 log.addEventListener("click", function(event){
     event.preventDefault();
