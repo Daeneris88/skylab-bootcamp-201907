@@ -22,13 +22,13 @@
         <section class="panel panel--hide">
             <form>
                 <label for="name">Name </label> 
-                <input type="text" name="name" class="inputt"></p>
+                    <input type="text" name="name" class="inputt"></p>
                 <label for="surname">Surname</label>  
-                <input type="text" name="surname" class="inputt"></p>
+                    <input type="text" name="surname" class="inputt"></p>
                 <label for="email">Mail </label>
-                <input type="email" name="email" class="inputt"></p>
+                    <input type="email" name="email" class="inputt"></p>
                 <label for="password">Password </label>
-                <input type="password" name="password" class="inputt"></p>
+                    <input type="password" name="password" class="inputt"></p>
                 <button type="submit">Register</button>
             </form>
             <p class="feedback"></p>
@@ -43,9 +43,9 @@
         <section class="panel panel--hide">
             <form>
             <label for="email">Mail </label>
-            <input type="email" name="email" class="inputt"></p>
+                <input type="email" name="email" class="inputt"></p>
             <label for="password">Password </label>
-            <input type="password" name="password" class="inputt"></p>
+                <input type="password" name="password" class="inputt"></p>
             <button onclick=" ">Go</button>
             </form>
             <p class="feedbackL"></p>
@@ -54,10 +54,18 @@
 
         <section class="panel panel--hide">
             <p>Welcome ! ! </p>
+            <form>
+                <label for="ducks">Ducks Love </label>
+                    <input type="text" class="inputt" id="query">
+                <button type="submit">Search</button>    
+            </form>
+            <section class="duckList"></section>
+            <button class="back" >Log Out</button>
         </section>
     </main>
-
+    <script src="containers.js"></script>
+    <script src="data.js"></script>
+    <script src="functions.js"></script>
     <script src="main.js"></script>
-    <script src="funcions.js"></script>
     </body>
 </html>

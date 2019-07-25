@@ -1,12 +1,13 @@
-
-head{
-    margin: 20px;ss
+head {
+  margin: 20px;
 }
 
-.panel--show{
-    display: block;
-}    
-
-.panel--hide{
-    display: none;
+.panel--show {
+  display: block;
 }
+
+.panel--hide {
+  display: none;
+}
+
+/*# sourceMappingURL=style.css.map */

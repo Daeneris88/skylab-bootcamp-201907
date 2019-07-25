@@ -59,13 +59,12 @@ function clear(){
     for(var i = 0; i < inputt.length; i++){
         inputt[i].value = "";
     }
-    var feedback = register.children[1];
+    var feedback = register.container.children[1];
     feedback.innerText = "";
 
-    var feedbackL = register.children[1];
+    var feedbackL = login.container.children[1];
     feedbackL.innerText = "";
 }
-
 
 function goButtomF(email, password){
 
@@ -74,12 +73,58 @@ function goButtomF(email, password){
     }
     else{
         if(findL(email, password) === true){
-            //nombre del container
         }
         else { throw new Error("Wrong e-mail and/or password!");}
     }
 }
 
+function duckling(query){
+
+    var request = new XMLHttpRequest();
+
+    request.open('get', 'http://duckling-api.herokuapp.com/api/search?q=' + query);
+
+    request.onload = function () {
+        var results = JSON.parse(request.responseText);
+        
+        var ul = document.createElement("ul");
+        document.getElementsByClassName("duckList")[0].appendChild(ul);
+        ul.innerHTML = "";
+        
+        //console.log(results);
+        results.forEach(function (item) {
+            //console.log(item.title, item.imageUrl);
+
+            var li = document.createElement('li');          
+            var h3 = document.createElement('h3');
+            h3.innerText = item.title;
+            li.appendChild(h3);    
+
+            var img = document.createElement('img');
+            img.src = item.imageUrl;
+            li.appendChild(img);
+            li.addEventListener("click", function(event){
+                event.preventDefault();
+                this.onItemClick(id);
+            
+            }.bind(this));
+
+            ul.appendChild(li);
+
+
+        });
+    };
+    request.send();
+}
+
+
+// ----------
 
 
 
+duckResult.prototype.onItemClick = function(id){
+    logic.retrieveDuck(id, function(duck){
+
+    });
+
+}

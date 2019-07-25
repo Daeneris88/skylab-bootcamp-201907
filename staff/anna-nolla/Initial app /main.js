@@ -1,119 +1,69 @@
 
-
-    var panels = document.getElementsByClassName("panel");
-    var inputt = document.getElementsByClassName("inputt");
-    var initial = panels[0];
-    var register = panels[1];
-    var login = panels[3];
-    var registerSuccess = panels[2];
-    var page = panels[4];
+var panels = document.getElementsByClassName("panel");
+var inputt = document.getElementsByClassName("inputt");
+    
+var initial = new Initial(panels[0]);
+var register = new Register(panels[1]);
+var registerSuccess = new RegisterSuccess(panels[2]);
+var login = new Login(panels[3]);
+var homePage = new HomePage(panels[4]);
     
     
-    var users = [{null: null}];
-    
-    var registerLink = initial.children[1];
-    var loginLink = initial.children[2];
-    var goButtom = login.children[0];
-    var registerBack = login.children[2];
-    var registerForm = register.children[0];
-    var registerBackLink = register.children[2];
-    var log = registerSuccess.children[1];
-    
-registerLink.addEventListener("click", function(event){
-        event.preventDefault();
-
-        initial.classList.remove("panel--show");
-        initial.classList.add("panel--hide");
-        
-        register.classList.remove('panel--hide');
-        register.classList.add('panel--show');
-    });
-
-registerBackLink.addEventListener("click", function(event){
-    event.preventDefault();
-    
-    clear();
-
-    register.classList.remove("panel--show");
-    register.classList.add("panel--hide");
-
-    initial.classList.remove("panel--hide");
-    initial.classList.add("panel--show");
+initial.onNavRegister(function(){
+        initial.hide();
+        register.show();
 });
 
-registerBack.addEventListener("click", function(event){
-    event.preventDefault();
-    
-    clear();
-
-    login.classList.remove("panel--show");
-    login.classList.add("panel--hide");
-
-    initial.classList.remove("panel--hide");
-    initial.classList.add("panel--show");
-
+register.onNavInitial(function(){
+    register.hide();
+    initial.show();
 });
 
-loginLink.addEventListener("click", function(event){
-        event.preventDefault();
+login.onNavInitial(function(){
+    login.hide();
+    initial.show();
+});
 
-        initial.classList.remove("panel--show");
-        initial.classList.add("panel--hide");
+initial.onNavLogin(function(){
+        initial.hide();
+        login.show();
+});
 
-        login.classList.remove("panel--hide");
-        login.classList.add("panel--show");
-    });
-
-registerForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-    debugger
-    var name = event.target.name.value;
-    var surname = event.target.surname.value;
-    var email = event.target.email.value;
-    var password = event.target.password.value;
-
+register.onNavRegisterSuccess(function(name, surname, email, password) {
     try{
         registerF(name, surname, email, password);
-
-        register.classList.remove('panel--show');
-        register.classList.add('panel--hide');
-        
-        registerSuccess.classList.remove('panel--hide');
-        registerSuccess.classList.add('panel--show');
-
+        register.hide();
+        registerSuccess.show();
     } catch(error){
-        var feedback = register.children[1];
+        var feedback = register.container.children[1];
         feedback.innerText = error.message;
     }   
 });
 
-goButtom.addEventListener("submit", function(event){
-    event.preventDefault();
-    
-    var email = event.target.email.value;
-    var password = event.target.password.value;
-
+login.onNavHomePage(function(email,password){
     try{
         goButtomF(email,password);
-
-        login.classList.remove("panel--show");
-        login.classList.add("panel--hide");
-
-        page.classList.remove("panel--hide");
-        page.classList.add("panel--show");
+        login.hide();
+        homePage.show();
     } catch(error){
-        var feedbackL = login.children[1];
+        var feedbackL = login.container.children[1];
         feedbackL.innerText = error.message;
     }
 });
 
-log.addEventListener("click", function(event){
-    event.preventDefault();
+registerSuccess.onNavLogin(function(){
+    registerSuccess.hide();
+    login.show();
+});
 
-    registerSuccess.classList.remove("panel--show");
-    registerSuccess.classList.add("panel--hide");
+homePage.onNavInitial(function(){
+    homePage.hide();
+    initial.show();
+});
 
-    login.classList.remove("panel--hide");
-    login.classList.add("panel--show");
+homePage.onDuckSearch(function(query){
+    try{
+        duckling(query);
+    }catch{ }
 });
 
