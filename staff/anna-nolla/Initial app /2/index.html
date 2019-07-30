@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Ducks-App</title>
+</head>
+<body>
+    <header>
+        <h1> Duck Lovers! ! </h1>
+    </header>
+    <main>
+        <section class="landing show">
+            <h2> - </h2>
+            <img src="" class="logo">
+            <a type="button" class="regButton" href="">Register</a>
+            <a type="button" class="logButton" href="">Log In</a>
+        </section>
+
+        <section class="register hide">
+            <form class="registerButton">
+                <label for="name">Name </label>
+                    <input type="text" name="name" class="input name">
+                <label for="surname">Surname </label>
+                    <input type="text" name="surname" class="input surname">
+                <label for="email">E-mail </label>
+                    <input type="email" name="email" class="input email">
+                <label for="pasword">Pasword </label>
+                    <input type="password" name="password" class="input pasword">
+                <button type="submit" >Register</button>
+            </form>
+            <p class="feedbackR"></p>
+            <button class="back">Back</button>
+        </section>
+
+        <section class="regSuccess hide">
+            <p> - </p>
+            <a type="button" class="logButton" href="">Log In</a>
+
+            <button class="back">Back</button>
+        </section>
+
+        <section class="logIn hide">
+            <form class="go">
+                <label for="email">E-mail </label>
+                    <input type="email" name="email" class="input email">
+                <label for="pasword">Pasword </label>
+                    <input type="pasword" name="password" class="input password">
+                <button onclick="" >Go</button>
+            </form>
+            <p class="feedbackR"></p>
+            <button class="back">Back</button>
+        </section>
+
+        <section class="homePage hide">
+            <h2> - </h2>
+            <label for="duck">Look for your Duck: </label>
+                <input type="text" name="duckSearch" class="input duckSearch">
+            <button type="submit" class="search">Search</button>
+            <section class="duckList hide">
+            </section>
+            <section class="duckDetails hide">
+                <button class="backSearch">Back</button>
+            </section>
+
+            <button class="back">Back</button>
+        </section>
+    </main>
+
+    <script src="data/data.js"></script>
+    
+    <script src="logic/register.js"></script>
+    <script src="logic/logIn.js"></script>
+    <script src="logic/back.js"></script>
+    <script src="logic/customLogic/ducks.js"></script>
+
+    <script src="components/component.js"></script>
+    <script src="components/landing.js"></script>
+    <script src="components/register.js"></script>
+    <script src="components/logIn.js"></script>
+    <script src="components/regSuccess.js"></script>
+    <script src="components/homePage.js"></script>
+    <script src="components/customComp/duckList.js"></script>
+    <script src="components/customComp/duckDetails.js"></script>
+    
+
+    <script src="main.js"></script>
+</body>
+</html>

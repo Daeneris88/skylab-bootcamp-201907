@@ -1,7 +1,11 @@
 const calc = <form onSubmit={event => {
     event.preventDefault()
 
-    const { target: { a: { value: a }, b: { value: b } } } = event
+    const{ 
+        target: { 
+            a: { value: a },
+            b: { value: b }
+    } } = event
 
     console.log(Number(a) + Number(b))
 }}>

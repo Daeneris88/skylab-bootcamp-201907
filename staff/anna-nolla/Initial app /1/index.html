@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>I.A.</title>
+</head>
+<body>
+    <header>
+        <h1> Initial App ! ! </h1>
+    </header>
+
+    <main>
+        <section class="panel panel--show">
+            <p>Register or LogIn to continue:</p>
+            <a class="registerLink" href="">Register</a> or
+            <a class="loginLink" href="">LogIn</a>
+        </section>
+
+        <section class="panel panel--hide">
+            <form>
+                <label for="name">Name </label> 
+                    <input type="text" name="name" class="inputt"></p>
+                <label for="surname">Surname</label>  
+                    <input type="text" name="surname" class="inputt"></p>
+                <label for="email">Mail </label>
+                    <input type="email" name="email" class="inputt"></p>
+                <label for="password">Password </label>
+                    <input type="password" name="password" class="inputt"></p>
+                <button type="submit">Register</button>
+            </form>
+            <p class="feedback"></p>
+            <a class="back" href="">Back</a>
+        </section>
+
+        <section class="panel panel--hide">
+                <p>You were registered correctly! ! </p>
+                <p>To continue <a href="">Log in</a></p>
+            </section>
+
+        <section class="panel panel--hide">
+            <form>
+            <label for="email">Mail </label>
+                <input type="email" name="email" class="inputt"></p>
+            <label for="password">Password </label>
+                <input type="password" name="password" class="inputt"></p>
+            <button onclick=" ">Go</button>
+            </form>
+            <p class="feedbackL"></p>
+            <a class="back" href="">Back</a>
+        </section>
+
+        <section class="panel panel--hide">
+            <p>Welcome ! ! </p>
+            <form>
+                <label for="ducks">Ducks Love </label>
+                    <input type="text" class="inputt" id="query">
+                <button type="submit">Search</button>    
+            </form>
+            <section class="duckList"></section>
+            <button class="back" >Log Out</button>
+        </section>
+    </main>
+    <script src="containers.js"></script>
+    <script src="data.js"></script>
+    <script src="functions.js"></script>
+    <script src="main.js"></script>
+    </body>
+</html>
