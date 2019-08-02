@@ -288,21 +288,45 @@ describe('logic', () => {
         })
     })
 
-    xdescribe('retrieve duck', () => {
-        it('should succeed on valid id', done => {
-            const id = '5c3853aebd1bde8520e66ee8'
+    describe('retrieve duck', () => {
+        let data
 
-            logic.retrieveDuck(undefined, id, (error, duck) => {
+        beforeEach(done => {
+            call('https://skylabcoders.herokuapp.com/api/user', 'post',
+                { 'content-type': 'application/json' },
+                user,
+                (error, response) => {
+                    if (error) done(error)
+                    else if (response.status === 'KO') done(new Error(response.error))
+                    else call('https://skylabcoders.herokuapp.com/api/auth', 'post',
+                        { 'content-type': 'application/json' },
+                        { username: user.username, password: user.password },
+                        (error, response) => {
+                            if (error) done(error)
+                            else if (response.status === 'KO') done(new Error(response.error))
+                            else {
+                                data = response.data
+
+                                done()
+                            }
+                        }
+                    )
+                }
+            )
+        })
+
+        it('should succeed on valid id', done => {
+            const duckId = '5c3853aebd1bde8520e66ee8'
+
+            logic.retrieveDuck(undefined, undefined, duckId, (error, duck) => {
                 expect(error).toBeUndefined()
 
                 expect(duck).toBeDefined()
-                expect(duck.id).toBe(id)
+                expect(duck.id).toBe(duckId)
                 expect(duck.title).toBeDefined()
                 expect(duck.imageUrl).toBeDefined()
                 expect(duck.price).toBeDefined()
-                expect(duck.link).toBeDefined()
-                expect(duck.favorite).toBeUndefined()
-
+                expect(duck.link
                 done()
             })
         })
@@ -310,7 +334,7 @@ describe('logic', () => {
         it('should fail on non valid id', done => {
             const id = '5c3853aebd1bde8520e66ff9'
 
-            logic.retrieveDuck(undefined, id, (error, duck) => {
+            logic.retrieveDuck(undefined, undefined, duckId, (error, duck) => {
                 expect(error).toBeDefined()
                 expect(duck).toBeUndefined()
 
