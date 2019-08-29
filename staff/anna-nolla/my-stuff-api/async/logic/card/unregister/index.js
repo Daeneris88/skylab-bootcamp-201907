@@ -21,7 +21,8 @@ module.exports = function(id, number) {
                 const card = user.cards.findIndex(card => card.number === number)
                 if(card.length === 0) throw Error('This card does not exist')
                     else{ 
-                        user.cards.splice(card)
+                        debugger
+                        user.cards.splice(card,1)
                         user.save()
                     }
                 }

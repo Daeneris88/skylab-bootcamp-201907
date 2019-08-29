@@ -5,7 +5,7 @@ module.exports = (req, res) => {
     const { params: { id }, body } = req
 
     try {
-        logic.user.update(id, body)
+        logic.updateUser(id, body)
             .then(() => res.json({ message: 'User updated successfully'}))
             .catch(({ message }) => res.status(400).json({ error: message }))
         } catch({ message }) {
