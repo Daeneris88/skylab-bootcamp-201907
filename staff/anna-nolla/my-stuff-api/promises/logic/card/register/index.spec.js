@@ -29,7 +29,7 @@ describe('logic - register card', () => {
             })
     })
 
-    it('should succeed on correct data', () => 
+    it('should succeed on correct data', () =>
         logic.registerCard(id, number, expiry)
             .then(cardId => {
                 expect(cardId).to.exist
@@ -53,6 +53,31 @@ describe('logic - register card', () => {
                 })
             )
     })
+
+
+
+    it('should fail on unexisting user', () =>
+        logic.registerCard('5d5d5530531d455f75da9fF9', number, expiry)
+            .catch(({ message }) => expect(message).to.equal(`User does not exists.`))
+    )
+
+    it('should fail on existing card', () =>
+        logic.registerCard(id, number, expiry)
+            .then(() => logic.registerCard(id, number, expiry))
+            .catch(({ message }) => expect(message).to.equal('Card already exists'))
+    )
+
+    it('should fail on empty user id', () =>
+        expect(() => logic.registerCard("", number, expiry)).to.throw('user id is empty or blank')
+    )
+
+    it('should fail on wrong user id type', () =>
+        expect(() => logic.registerCard(123, number, expiry)).to.throw('user id with value 123 is not a string')
+    )
+
+    it('should fail on empty number', () =>
+        expect(() => logic.registerCard(id, "", expiry)).to.throw('number is empty or blank')
+    )
 
     after(() => mongoose.disconnect())
 })

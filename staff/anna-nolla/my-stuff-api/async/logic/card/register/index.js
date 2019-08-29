@@ -13,20 +13,23 @@ const { User, Card } = require('../../../models')
 module.exports = function(id, number, expiry) {
     let _user, cardId
 
-    validate.string(id, 'id')
+    validate.string(id, 'user id')
     validate.string(number, 'number')
     validate.string(expiry, 'expiry date')
-    
-    return User.findById(id)
-        .then(user => {
+
+    return (async () => {  
+        const user = await User.findById(id)
             if (!user) throw Error('User does not exists.')
-            const card = user.cards.find(card => card.number === number)
-            if (card) throw Error('Card already exists')
-            _user = user
-            const newCard = new Card({ number, expiry })
-            cardId = newCard.id
-            _user.cards.push(newCard)
-            return _user.save()
-        })
-        .then(() => cardId)
+            else {
+                const card = await user.cards.find(card => card.number === number)
+                    if (card) throw Error('Card already exists')
+                    else {
+                        const newCard = new Card({ number, expiry })
+                        cardId = newCard.id
+                        user.cards.push(newCard)
+                        await user.save()
+                        return cardId
+                }
+            }
+    })()
 }

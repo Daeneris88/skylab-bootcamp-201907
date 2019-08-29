@@ -9,7 +9,7 @@ describe('logic - retrieve card', () => {
 
     let number, expiry, name, surname, email, password, id, card
 
-    beforeEach(() => {
+    beforeEach( async () => {
         let date = new Date()
 
         number = `${Math.random()}`
@@ -20,37 +20,30 @@ describe('logic - retrieve card', () => {
         email = `email-${Math.random()}@mail.com`
         password = `password-${Math.random()}`
 
-        return User.deleteMany()
-        .then(() => {
-                card = new Card({ number, expiry })
-                return User.create({ name, surname, email, password, 'cards': card })
-                    .then(user => id = user.id)
-        }) 
+        await User.deleteMany()
+            card = await new Card({ number, expiry })
+            const user = await User.create({ name, surname, email, password, 'cards': card })
+            id = user.id
     })      
     
+    it('should succeed on correct data', async () =>{ 
+        const card = await logic.retrieveCard(id)
+            expect(card).to.exist
+            expect(card[0].number).to.equal(number)
+            expect(card[0].expiry).to.equal(expiry)
+            })
 
-    it('should succeed on correct data', () => 
-        logic.retrieveCard(id)
-            .then(card => {
-                expect(card).to.exist
-                expect(card[0].number).to.equal(number)
-                expect(card[0].expiry).to.equal(expiry)
-            })
-    )
-    it('should fail if the user does not have cards', () => {
-        return User.findById(id)
-            .then( user => {
-                user.cards = []
-                return user.save()
-                    .then(() =>
-                        logic.retrieveCard(id)
-                            .then(res => expect(res).not.to.exist)
-                            .catch(error => {
-                                expect(error).to.exist
-                                expect(error.message).to.equal(`This user does not have cards`)
-                            })
-                    )
-            })
+    it('should fail if the user does not have cards', async () => {
+        const user = await User.findById(id)
+            user.cards = []
+            await user.save()
+            try{
+                const res = await logic.retrieveCard(id)
+                    expect(res).not.to.exist
+            }catch(error) {
+                expect(error).to.exist
+                expect(error.message).to.equal(`This user does not have cards`)
+            }
     })
 
     after(() => mongoose.disconnect())

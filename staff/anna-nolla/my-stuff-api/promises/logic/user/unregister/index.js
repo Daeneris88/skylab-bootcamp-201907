@@ -10,7 +10,7 @@ const validate = require('../../../utils/validate')
  */
 module.exports = function (id, password) {
     validate.string(password, 'password')
-    validate.string(id, 'id')
+    validate.string(id, 'user id')
 
     return User.deleteOne({ _id: id, password })
         .then(result => {

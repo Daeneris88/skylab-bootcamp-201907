@@ -13,21 +13,20 @@ const { Property } = require('../../../models')
  */
 
 module.exports = function(address, m2, year, cadastre, id) {
-
     validate.string(address, 'address')
     validate.number(m2, 'm2')
     validate.number(year, 'year')
     validate.string(cadastre, 'cadastre')
-    validate.string(id, 'id')
+    validate.string(id, 'user id')
 
-    return Property.findOne({ cadastre })
-        .then(response => {
+    return (async () => {
+        const response = await Property.findOne({ cadastre })
             if (response) throw new Error('Property already exists.')
             else {
-                const property = new Property({ address,m2, year, cadastre })
+                const property = await new Property({ address,m2, year, cadastre })
                 property.owners.push(id)
-                return property.save()
+                const prop = await property.save()
+                return prop._id.toString()
             }
-        })
-        .then(response => response._id.toString())
+    })()
 }    

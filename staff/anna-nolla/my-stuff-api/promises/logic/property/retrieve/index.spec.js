@@ -45,13 +45,21 @@ describe('logic - retrieve property', () => {
                 expect(property.owners[0]).to.equal(id)
             })
     )
-    it('should fail if there are no properties', () => 
+    it('should fail if there are no properties', () =>
         logic.retrieveProperty('5d65115f8f58cc540cc376ca')
             .then(res => expect(res).not.to.exist)
             .catch(error => {
                 expect(error).to.exist
                 expect(error.message).to.equal(`Property with id 5d65115f8f58cc540cc376ca does not exist.`)
             })
+    )
+
+    it('should fail on empty property id', () =>
+        expect(() => logic.retrieveProperty("")).to.throw('property id is empty or blank')
+    )
+
+    it('should fail on wrong surname type', () =>
+        expect(() => logic.retrieveProperty(123)).to.throw('property id with value 123 is not a string')
     )
     after(() => mongoose.disconnect())
 })

@@ -22,9 +22,9 @@ describe('logic - retrieve card', () => {
 
         return User.deleteMany()
         .then(() => {
-                card = new Card({ number, expiry })
-                return User.create({ name, surname, email, password, 'cards': card })
-                    .then(user => id = user.id)
+            card = new Card({ number, expiry })
+            return User.create({ name, surname, email, password, 'cards': card })
+                .then(user => id = user.id)
         }) 
     })      
     

@@ -10,7 +10,7 @@ const { User } = require('../../../models')
 */
 
 module.exports = function(id, fieldsToUpdate) {
-    validate.string(id, 'id')
+    validate.string(id, 'user id')
 
     return User.findByIdAndUpdate(id, { $set: fieldsToUpdate })
         .then(user => {

@@ -18,7 +18,7 @@ module.exports = function(address, m2, year, cadastre, id) {
     validate.number(m2, 'm2')
     validate.number(year, 'year')
     validate.string(cadastre, 'cadastre')
-    validate.string(id, 'id')
+    validate.string(id, 'user id')
 
     return Property.findOne({ cadastre })
         .then(response => {

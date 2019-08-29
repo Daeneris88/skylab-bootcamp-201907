@@ -33,10 +33,18 @@ describe('logic - retrieve user', () => {
     )
     it('should throw an error with a wrong id', () =>
         logic.retrieveUser("5d5fe532b4f3f827e6fc64f8")
-            .catch( error =>{
+            .catch(error => {
                 expect(error).to.exist
                 expect(error.message).to.equal(`user with id 5d5fe532b4f3f827e6fc64f8 not found`)
             })
+    )
+
+    it('should fail on empty user id', () =>
+        expect(() => logic.retrieveUser("")).to.throw('user id is empty or blank')
+    )
+
+    it('should fail on wrong user id type', () =>
+        expect(() => logic.retrieveUser(123)).to.throw('user id with value 123 is not a string')
     )
     after(() => mongoose.disconnect())
 })

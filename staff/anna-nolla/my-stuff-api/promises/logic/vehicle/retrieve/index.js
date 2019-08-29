@@ -7,15 +7,15 @@ const { Vehicle } = require('../../../models')
  * 
  * @returns {Promise}
 */
-
-module.exports = function(id) {
+// falta logica ! ! ! mira el retrieve property
+module.exports = function(vehicleId) {
     
-    validate.string(id, 'Vehicle ID')
+    validate.string(vehicleId, 'Vehicle id')
 
-    return Vehicle.findOne({ _id: id }, { _id: 0, __v: 0 }).lean()
+    return Vehicle.findById(vehicleId).lean()
         .then(vehicle => {
-            if (!vehicle) throw Error(`Vehicle with id ${id} does not exist.`)
-            vehicle.id = id 
+            if (!vehicle) throw Error(`Vehicle with id ${vehicleId} does not exist.`)
+            vehicle.id = vehicleId 
             return vehicle
         })
 }

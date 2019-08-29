@@ -1,6 +1,7 @@
 const validate = require('../../../utils/validate')
 const { Property } = require('../../../models')
 
+
 /**
  * 
  * @param {*} id
@@ -10,12 +11,16 @@ const { Property } = require('../../../models')
 
 module.exports = function(id) {
     
-    validate.string(id, 'Property id')
+    validate.string(id, 'property id')
 
-    return Property.findOne({ _id: id }, { _id: 0 }).lean()
-        .then(property => {
+    return (async () => {
+        const property = await Property.findById(id).lean()
             if (!property) throw Error(`Property with id ${id} does not exist.`)
-            property.id = id
-            return property
-        })
+            else {
+                property.owners.forEach((item , index) => {
+                    return property.owners[index] = item.toString()
+                })
+                return property
+            }
+    })()
 }

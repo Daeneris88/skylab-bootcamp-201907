@@ -11,8 +11,8 @@ const { User } = require('../../../models')
 
 module.exports = function(email, password) {
    
-    validate.string(email, 'username')
-    validate.email(email, 'username')
+    validate.string(email, 'email')
+    validate.email(email, 'email')
     validate.string(password, 'password')
 
     return User.findOne({ email, password })

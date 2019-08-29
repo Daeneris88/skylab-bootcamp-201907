@@ -52,5 +52,13 @@ describe('logic - update user', () => {
             .catch(({ message }) => expect(message).to.equal(`User with id ${id} does not exist.`))
     })
 
+    it('should fail on empty id', () => 
+        expect(() => logic.updateUser("", body)).to.throw('user id is empty or blank')
+    )
+    
+    it('should fail on wrong id type', () => 
+        expect(() => logic.updateUser(123, body)).to.throw('user id with value 123 is not a string')
+    )
+
     after(() => mongoose.disconnect())
 })

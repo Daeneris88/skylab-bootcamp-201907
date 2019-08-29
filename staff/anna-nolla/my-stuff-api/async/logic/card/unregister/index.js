@@ -11,18 +11,19 @@ const { User } = require('../../../models')
 
 module.exports = function(id, number) {
 
-    validate.string(id, 'id')
+    validate.string(id, 'user id')
     validate.string(number, 'number')
 
-    return User.findOne({ _id: id })
-        .then(user => {
+    return (async () => {
+        const user = await User.findOne({ _id: id })
             if(!user) throw Error('There is no user with this id')
             else {
                 const card = user.cards.findIndex(card => card.number === number)
-                    if(card.length === 0) throw Error('This card does not exist')
-                    else{ user.cards.splice(card)
-                            user.save()
-                        }
+                if(card.length === 0) throw Error('This card does not exist')
+                    else{ 
+                        user.cards.splice(card)
+                        user.save()
+                    }
                 }
-        })
+    })()
 }

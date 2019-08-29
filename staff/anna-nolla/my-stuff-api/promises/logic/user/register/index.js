@@ -15,8 +15,9 @@ module.exports = function(name, surname, email, password) {
 
     validate.string(name, 'name')
     validate.string(surname, 'surname')
-    validate.string(email, 'username')
-    validate.email(email, 'username')
+    validate.string(email, 'email')
+    validate.email(email, 'email')
+    validate.string(password, 'password')
     
     return User.findOne({ email })
         .then(user => {

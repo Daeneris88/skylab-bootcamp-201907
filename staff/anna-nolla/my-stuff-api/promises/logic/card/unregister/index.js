@@ -11,7 +11,7 @@ const { User } = require('../../../models')
 
 module.exports = function(id, number) {
 
-    validate.string(id, 'id')
+    validate.string(id, 'user id')
     validate.string(number, 'number')
 
     return User.findOne({ _id: id })

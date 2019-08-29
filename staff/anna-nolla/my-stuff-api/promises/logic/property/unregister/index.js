@@ -1,5 +1,5 @@
 const validate = require('../../../utils/validate')
-const { Property } = require('../../../models')
+const { Property, User } = require('../../../models')
 
 /**
  * Unregisters a user by their id
@@ -9,12 +9,23 @@ const { Property } = require('../../../models')
  * @returns {Promise}
 */
 
-module.exports = function(id) {
+module.exports = function(propertyId, id) {
+    validate.string(propertyId, 'property id')
+    validate.string(id, 'user id')
 
-    validate.string(id, 'id')
-
-    return Property.deleteOne({ _id: id })
-        .then(result => {
-            if (!result.deletedCount) throw Error('Wrong id provided.')
+    return User.findById(id)
+        .then(user =>{
+            if(!user) throw new Error(`user with id ${id} does not exist`)
+            else{
+                return Property.findById(propertyId)
+                    .then(property =>{
+                        if(!property) throw new Error(`property with id ${propertyId} does not exist`)
+                        else{
+                            if(!property.owners.includes(id)) throw new Error(`user with id ${id} is not owner of property with id ${propertyId}`)
+                            if(property.owners.length > 1) throw new Error(`invalid action: there are two or more owners for this property`)
+                            else  Property.deleteOne({ _id: propertyId })
+                        }
+                    })
+            }
         })
 }

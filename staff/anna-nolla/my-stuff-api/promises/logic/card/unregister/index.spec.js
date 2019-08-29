@@ -44,5 +44,26 @@ describe('logic - unregister card', () => {
                 expect(error.message).to.equal(`This card does not exist`)
             })
     })
+
+    it("should fail on unexisting user" , () => {
+        logic.unregisterCard('5d5d5530531d455f75da9fF9' , number)
+            .catch(({ message }) => expect(message).to.equal('There is no user with this id'))
+    })
+
+    it('should fail on empty user id', () => 
+        expect(() => logic.unregisterCard("" , number)).to.throw('user id is empty or blank')
+    )
+    
+    it('should fail on wrong user id type', () => 
+        expect(() => logic.unregisterCard(123 , number)).to.throw('user id with value 123 is not a string')
+    )
+    
+    it('should fail on empty card id', () => 
+        expect(() => logic.unregisterCard(id , "")).to.throw('number is empty or blank')
+    )
+    
+    it('should fail on wrong card id type', () => 
+        expect(() => logic.unregisterCard(id , 123)).to.throw('number with value 123 is not a string')
+    )
     after(() => mongoose.disconnect())
 })

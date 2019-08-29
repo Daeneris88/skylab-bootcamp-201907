@@ -9,38 +9,62 @@ describe('logic - authenticate user', () => {
 
     let name, surname, email, password, id
 
-    beforeEach(() => {
+    beforeEach(async () => {
         name = `name-${Math.random()}`
         surname = `surname-${Math.random()}`
         email = `email-${Math.random()}@domain.com`
         password = `password-${Math.random()}`
 
-        return User.deleteMany()
-            .then(() => User.create({ name, surname, email, password })
-                .then(user => id = user.id))
+        await User.deleteMany()
+            const user = await User.create({ name, surname, email, password })
+            id = user.id
     })
 
-    it('should succeed on correct data', () =>
-        logic.authenticateUser(email, password)
-            .then(_id => {
-                expect(_id).to.exist
-                expect(_id).to.be.a('string')
-                expect(_id).to.equal(id)
-            })
+    it('should succeed on correct data', async () => {
+        const id = await logic.authenticateUser(email, password)
+                expect(id).to.exist
+                expect(id).to.be.a('string')
+                expect(id).to.equal(id)
+    })
+    it('should fail on incorrect mail', async () =>{
+        email = "pepito@mail.com"
+        try{
+            await logic.authenticateUser(email, password)
+            throw new Error('should not reach this point')
+        } catch(error) {
+            expect(error).to.exist
+            expect(error.message).to.equal('Wrong credentials.')
+        }
+    })
+    it('should fail on wrong password', async () => {
+        password = '123'
+        try {
+            await logic.authenticateUser(email, password)
+            throw new Error('should not reach this point')
+        }catch(error) {
+            expect(error).to.exist
+            expect(error.message).to.equal('Wrong credentials.')
+            }
+        })
+
+    it('should fail on empty email', () =>
+        expect(() => logic.authenticateUser("", password)).to.throw('email is empty or blank')
     )
-    it('should fail on incorrect mail', () => 
-            logic.authenticateUser("pepito@mail.com", password)
-                .catch( error => {
-                    expect(error).to.exist
-                    expect(error.message).to.equal('Wrong credentials.')
-                })
+
+    it('should fail on wrong email type', () =>
+        expect(() => logic.authenticateUser("123", password)).to.throw('email with value 123 is not a valid e-mail')
     )
-    it('should fail on wrong password', () => 
-        logic.authenticateUser(email, "123")
-            .catch( error => {
-                expect(error).to.exist
-                expect(error.message).to.equal('Wrong credentials.')
-            })
+
+    it('should fail on wrong password type', () =>
+        expect(() => logic.authenticateUser(123, password)).to.throw('email with value 123 is not a string')
+    )
+
+    it('should fail on empty password', () =>
+        expect(() => logic.authenticateUser(email, "")).to.throw('password is empty or blank')
+    )
+
+    it('should fail on wrong password type', () =>
+        expect(() => logic.authenticateUser(email, 123)).to.throw('password with value 123 is not a string')
     )
 
     after(() => mongoose.disconnect())

@@ -13,7 +13,7 @@ const { User, Card } = require('../../../models')
 module.exports = function(id, number, expiry) {
     let _user, cardId
 
-    validate.string(id, 'id')
+    validate.string(id, 'user id')
     validate.string(number, 'number')
     validate.string(expiry, 'expiry date')
     

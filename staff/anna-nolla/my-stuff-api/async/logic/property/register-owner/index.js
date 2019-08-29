@@ -25,9 +25,13 @@ module.exports = function(propertyId, ownerId) {
         })
         .then(user => {
             if (!user) throw Error('Wrong owner id provided.')
-            const match = _property.owners.find(owner => owner === ownerId)
-            if (match) throw Error(`Owner already registered in property with id ${propertyId}`)
-            _property.owners.push(ownerId)
-            return _property.save()
+            else {
+                const match = _property.owners.find(owner => owner === ownerId)
+                if (match) throw Error(`Owner already registered in property with id ${propertyId}`)
+                else {
+                    _property.owners.push(ownerId)
+                    return _property.save()
+                }
+            }
         })
 }
